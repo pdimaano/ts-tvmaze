@@ -8,6 +8,9 @@ interface IShow {
   image: string,
 }
 
+const MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
+const TVMAZE_API_URL = "http://api.tvmaze.com/";
+
 const $showsList = $("#showsList");
 const $episodesArea = $("#episodesArea");
 const $searchForm = $("#searchForm");
@@ -20,7 +23,7 @@ const $searchForm = $("#searchForm");
  *    (if no image URL given by API, put in a default image URL)
  */
 
-async function getShowsByTerm(term) {
+async function getShowsByTerm(term): {
 
 }
 
