@@ -1,6 +1,13 @@
 import axios from "axios";
 import * as $ from 'jquery';
 
+interface IShowFromAPI {
+  id: number,
+  name: string,
+  summary: string,
+  image: { medium: string } | null,
+}
+
 interface IShow {
   id: number,
   name: string,
@@ -27,7 +34,9 @@ async function getShowsByTerm(term: string): Promise<IShow[]> {
   const response = await axios({
     url: `${TVMAZE_API_URL}search/shows?q=${term}`,
     method: "GET",
-  })
+  });
+
+  return response.data.map((result: { show: }))
 }
 
 
