@@ -36,7 +36,15 @@ async function getShowsByTerm(term: string): Promise<IShow[]> {
     method: "GET",
   });
 
-  return response.data.map((result: { show: }))
+  return response.data.map((result: { show: IShowFromAPI; }): IShow => {
+    const show = result.show;
+    return {
+      id: show.id,
+      name: show.name,
+      summary: show.summary,
+      image: show.image?.medium || MISSING_IMAGE_URL
+    };
+  });
 }
 
 
