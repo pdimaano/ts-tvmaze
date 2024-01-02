@@ -12585,6 +12585,7 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 var MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
 var TVMAZE_API_URL = "http://api.tvmaze.com/";
 var $showsList = $("#showsList");
+var $episodesList = $("#episodesList");
 var $episodesArea = $("#episodesArea");
 var $searchForm = $("#searchForm");
 /** Given a search term, search for tv shows that match that query.
@@ -12664,9 +12665,55 @@ $searchForm.on("submit", function (evt) {
 /** Given a show ID, get from API and return (promise) array of episodes:
  *      { id, name, season, number }
  */
-// async function getEpisodesOfShow(id) { }
-/** Write a clear docstring for this function... */
-// function populateEpisodes(episodes) { }
+function getEpisodesOfShow(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, axios_1.default)({
+                        url: "".concat(TVMAZE_API_URL, "shows/").concat(id, "/episodes"),
+                        method: "GET",
+                    })];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response.data.map(function (e) { return ({
+                            id: e.id,
+                            name: e.name,
+                            season: e.season,
+                            number: e.number,
+                        }); })];
+            }
+        });
+    });
+}
+/** Given a list of episodes, create markup for each and to DOM */
+function populateEpisodes(episodes) {
+    $episodesList.empty();
+    for (var _i = 0, episodes_1 = episodes; _i < episodes_1.length; _i++) {
+        var episode = episodes_1[_i];
+        var $item = $("<li>\n        ".concat(episode.name, "\n        (season ").concat(episode.season, ", episode ").concat(episode.number, ")\n      </li>\n      "));
+        $episodesList.append($item);
+    }
+    $episodesArea.show();
+}
+/** Handle click on episodes button: get episodes for show and display */
+function getEpisodesAndDisplay(evt) {
+    return __awaiter(this, void 0, void 0, function () {
+        var showId, episodes;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    showId = $(evt.target).closest(".Show").data("show-id");
+                    return [4 /*yield*/, getEpisodesOfShow(showId)];
+                case 1:
+                    episodes = _a.sent();
+                    populateEpisodes(episodes);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+$showsList.on("click", ".Show-getEpisodes", getEpisodesAndDisplay);
 
 
 /***/ })
