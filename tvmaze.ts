@@ -98,7 +98,19 @@ $searchForm.on("submit", async function (evt) {
  *      { id, name, season, number }
  */
 
-// async function getEpisodesOfShow(id) { }
+async function getEpisodesOfShow(id: number) {
+  const response = await axios({
+    url: `${TVMAZE_API_URL}shows/${id}/episodes`,
+    method: "GET",
+  });
+
+  return response.data.map((e: IEpisode) => ({
+    id: e.id,
+    name: e.name,
+    season: e.season,
+    number: e.number,
+  }));
+}
 
 /** Write a clear docstring for this function... */
 
