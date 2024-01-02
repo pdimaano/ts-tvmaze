@@ -139,3 +139,14 @@ function populateEpisodes(episodes: IEpisode[]) {
 
   $episodesArea.show();
 }
+
+/** Handle click on episodes button: get episodes for show and display */
+
+async function getEpisodesAndDisplay(evt: JQuery.ClickEvent): Promise<void> {
+  const showId = $(evt.target).closest(".Show").data("show-id");
+
+  const episodes = await getEpisodesOfShow(showId);
+  populateEpisodes(episodes);
+}
+
+$showsList.on("click", ".Show-getEpisodes", getEpisodesAndDisplay);
