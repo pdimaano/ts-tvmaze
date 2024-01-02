@@ -15,10 +15,18 @@ interface IShow {
   image: string,
 }
 
+interface IEpisode {
+  id: number,
+  name: string,
+  season: number,
+  number: number,
+}
+
 const MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
 const TVMAZE_API_URL = "http://api.tvmaze.com/";
 
 const $showsList = $("#showsList");
+const $episodesList = $("#episodesList");
 const $episodesArea = $("#episodesArea");
 const $searchForm = $("#searchForm");
 
